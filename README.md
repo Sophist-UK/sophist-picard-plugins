@@ -11,4 +11,19 @@ Have you ever struggled to understand what script variables are available for yo
 
 Then this plugin is for you. It add's a context (right-click) menu item which shows a dialog listing all the variables available for a file.
 
-Download the ZIP file [here](https://github.com/Sophist-UK/Picard-Plugins/blob/master/viewvariables.zip).
+Download the [ZIP file here](https://github.com/Sophist-UK/Picard-Plugins/blob/master/viewvariables.zip).
+
+##Abbreviate artist-sort
+Sometimes the album artist tag has a large number of individual names listed, particularly so for classical albums.
+
+This plugin replaces the artists forenames with their initials i.e. `Bach, Johann Sebastian` with `Bach, J. S.` and so both shortens the string and makes it more readable.
+
+This plugin operates only on the albumartistsort and artistsort tags.
+
+Download the [abbreviate_artistsort.py file here](https://github.com/Sophist-UK/Picard-Plugins/blob/master/abbreviate_artistsort.py).
+
+##Copy to Comments
+Some music players are unable to display the standard tags produced by Picard for Composer, Performers etc.
+This plugin copies this data to the default Comment so that these players can (hopefully) display this information.
+
+Download the [copy_to_comment.py file here](https://github.com/Sophist-UK/Picard-Plugins/blob/master/copy_to_comment.py).
