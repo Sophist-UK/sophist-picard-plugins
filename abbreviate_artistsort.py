@@ -18,7 +18,7 @@ PLUGIN_AUTHOR = u"Sophist"
 PLUGIN_DESCRIPTION = u'''Abbreviate Artist-Sort and Album-Artist-Sort Tags.
 e.g. "Vivaldi, Antonio" becomes "Vivaldi, A."
 This is particularly useful for classical albums that can have a long list of artists.'''
-PLUGIN_VERSION = "0.1"
+PLUGIN_VERSION = "0.2"
 PLUGIN_API_VERSIONS = ["1.0"]
 
 
@@ -66,19 +66,22 @@ from picard.metadata import register_track_metadata_processor
 #   Case d. Try to handle without abbreviating and get to next name which might not be foreign
 
 _debug_level = 0
-_abbreviate_tags = [('albumartistsort', 'albumartist'), ('artistsort', 'artist')]
+_abbreviate_tags = [
+    ('albumartistsort', 'albumartist', '~albumartistsort_abbrev'),
+    ('artistsort', 'artist', '~artistsort_abbrev'),
+    ]
 _prefixes = [u"A", u"The"]
 _split = u", "
 _abbreviate_cache = {}
 
 def abbreviate_artistsort(tagger, metadata, track, release):
 
-    for sortTag, unsortTag in _abbreviate_tags:
+    for sortTag, unsortTag, sortTagNew in _abbreviate_tags:
         if not (sortTag in metadata and unsortTag in metadata):
             continue
 
-        sorts = metadata.getall(sortTag)
-        unsorts = metadata.getall(unsortTag)
+        sorts = list(metadata.getall(sortTag))
+        unsorts = list(metadata.getall(unsortTag))
         for i in range(0,min(len(sorts),len(unsorts))):
             sort = sorts[i]
             if _debug_level > 1:
@@ -229,6 +232,6 @@ def abbreviate_artistsort(tagger, metadata, track, release):
                                 new_sort,
                                 )
                     sorts[i] = new_sort
-        metadata[sortTag] = sorts
+        metadata[sortTagNew] = sorts
 
 register_track_metadata_processor(abbreviate_artistsort)
