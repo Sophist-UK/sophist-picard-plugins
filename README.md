@@ -30,7 +30,7 @@ Full details in the [MusicBrainz forums](http://forums.musicbrainz.org/viewtopic
 Some music players are unable to display the standard tags produced by Picard for Composer, Performers etc.
 This plugin copies this data to the default Comment so that these players can (hopefully) display this information.
 
-Download the [copy_to_comment.py file here](https://github.com/Sophist-UK/Picard-Plugins/blob/master/copy_to_comment.py).
+Download the [copy_to_comment.py file here](https://github.com/Sophist-UK/Picard-Plugins/raw/master/copy_to_comment.py).
 
 Full details in the [MusicBrainz forums](http://forums.musicbrainz.org/viewtopic.php?id=4895).
 
