@@ -27,3 +27,10 @@ Some music players are unable to display the standard tags produced by Picard fo
 This plugin copies this data to the default Comment so that these players can (hopefully) display this information.
 
 Download the [copy_to_comment.py file here](https://github.com/Sophist-UK/Picard-Plugins/blob/master/copy_to_comment.py).
+
+##Album Artist Website
+Unfortunately, MusicBrainz does not supply the Artists Official Homepage url when Picard requests details for an album.
+
+This plugin makes an additional request to MusicBrainz to get this information and loads it into the 'website' variable.
+
+Download the [albumartist_website.py file here](https://github.com/Sophist-UK/Picard-Plugins/blob/master/albumartist_website.py).
