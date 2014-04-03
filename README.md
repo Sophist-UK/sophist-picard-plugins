@@ -43,3 +43,8 @@ Download the [albumartist_website.py file here](https://github.com/Sophist-UK/Pi
 
 Full details in the [MusicBrainz forums](http://forums.musicbrainz.org/viewtopic.php?id=4906).
 
+##Sort Multi-Value tags
+This plugin sorts multi-value tags (like Performer, Composer etc.).
+
+Download the [sort_multivalue_tags.py file here](https://github.com/Sophist-UK/Picard-Plugins/raw/master/sort_multivalue_tags.py).
+
