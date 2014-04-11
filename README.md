@@ -48,3 +48,9 @@ This plugin sorts multi-value tags (like Performer, Composer etc.).
 
 Download the [sort_multivalue_tags.py file here](https://github.com/Sophist-UK/Picard-Plugins/raw/master/sort_multivalue_tags.py).
 
+##MusicBee compatibility
+This plugin sets some tags to maximise the compatibility of mp3 files tagged by Picard with the MusicBee player.
+
+Download the [musicbee_compatibility.py file here](https://github.com/Sophist-UK/Picard-Plugins/raw/master/musicbee_compatibility.py).
+
+Full details in the [MusicBrainz forums](http://forums.musicbrainz.org/viewtopic.php?id=4903).
