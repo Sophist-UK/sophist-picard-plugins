@@ -3,9 +3,14 @@ PLUGIN_AUTHOR = 'Volker Zell (and Sophist)'
 PLUGIN_DESCRIPTION = '''
 Provide MusicBee compatible tags.
 <br/><br/>
-Note 1: The tags used by this plugin are only populated when you have checked Options / Metadata / Use track relationships.
+Note 1: The tags used by this plugin are only populated when you have
+checked Options / Metadata / Use track relationships.
 <br/>
-Note 2: Info copied includes ALL Performers, as well as the Composer, Producer, Mixer etc.
+Note 2: You may wish to use this with the Copy to Comment plugin,
+to which previous comment tag functionality has been moved.
+<br/>
+Note 3: Info copied includes ALL Performers, as well as the
+Composer, Producer, Mixer etc.
 <br/>
 <pre>
 MusicBee:               MusicBrainz tag:    MusicBrainz source:
@@ -18,7 +23,7 @@ Involved People List    IPLS                'Arranger', 'Engineer', 'Producer', 
 Comment                 comment:            All the above
 Misc                    MISC                'CatalogNumber', 'Barcode', 'ASIN', 'ReleaseType', 'ReleaseStatus', 'ReleaseCountry'
 </pre>
-Note 3: I use the following additional entry in CustomTagConfig.xml for MusicBee
+Note 4: I use the following additional entry in CustomTagConfig.xml for MusicBee
 <pre>
   &lsaquo;Tag id="Misc" id3v23="TXXX/MISC" id3v24="TXXX/MISC" wma="Misc" vorbisComments="Misc" mpeg="Misc" ape2="Misc" /&rsaquo;
 </pre>
@@ -27,7 +32,7 @@ and a couple of Virtual Columns with the following structure (because I ran out 
   Catalognumber = $Replace($First($Split(&lsaquo;Misc&rsaquo;,Catalognumber:,2)),",",;)
 </pre>
 '''
-PLUGIN_VERSION = "0.5"
+PLUGIN_VERSION = "0.6"
 PLUGIN_API_VERSIONS = ["0.15.0", "0.15.1", "0.16.0", "1.0.0", "1.1.0", "1.2.0", "1.3.0"]
 
 import re
@@ -47,7 +52,6 @@ class MusicBeeCompatibility:
         self.populate_writer(metadata)
         self.populate_tipl(metadata)
         self.populate_misc(metadata)
-        self.populate_comment(metadata)
 
     def populate_performers(self, metadata):
         performers = []
@@ -103,13 +107,6 @@ class MusicBeeCompatibility:
     def populate_misc(self, metadata):
         for name in ['CatalogNumber', 'Barcode', 'ASIN', 'ReleaseType', 'ReleaseStatus', 'ReleaseCountry']:
              self.txxx_add(metadata, 'MISC', name, name, '; ')
-
-    def populate_comment(self, metadata):
-        for name in ['Composer', 'Lyricist', 'Conductor', 'Arranger', 'Engineer', 'Producer', 'Mixer', 'Remixer', 'DJMixer']:
-             self.txxx_add(metadata, 'comment:', _(name), name.lower(), '\n')
-        for name in metadata.keys():
-            if name.startswith('performer:'):
-                self.txxx_add(metadata, 'comment:', name[10:].title(), name, '\n')
 
     def txxx_add(self, metadata, tagname, label, name, joiner):
         name = name.lower()
