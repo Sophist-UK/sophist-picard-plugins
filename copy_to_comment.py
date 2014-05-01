@@ -7,7 +7,7 @@ This plugin copies this data to the default Comment so that these players can (h
 Note 1: The tags used by this plugin are only populated when you have checked Options / Metadata / Use track relationships.
 <br/>
 Note 2: Info copied includes ALL performance types, as well as the Composer, Producer, Mixer and so on.'''
-PLUGIN_VERSION = "0.2"
+PLUGIN_VERSION = "0.3"
 PLUGIN_API_VERSIONS = ["0.15.0", "0.15.1", "0.16.0", "1.0.0", "1.1.0", "1.2.0", "1.3.0"]
 
 from picard.metadata import register_track_metadata_processor
@@ -186,4 +186,15 @@ def populate_comment_work_original_performer(relations):
     )
     return ''
 
-register_track_metadata_processor(populate_comment)
+try:
+    from picard.plugin import PluginPriority
+    register_track_metadata_processor(populate_comment, priority=PluginPriority.LOW)
+except ImportError:
+    log.warning(
+        "The %r plugin is designed to run at a specific priority,"
+        "however this version of Picard does not include the priority capability"
+        "and so the plugins may not run in the correct sequence and"
+        "therefore may not work as you expect.",
+        PLUGIN_NAME
+    )
+    register_track_metadata_processor(populate_comment)
