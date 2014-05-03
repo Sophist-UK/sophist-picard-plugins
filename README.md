@@ -56,7 +56,7 @@ Download the [musicbee_compatibility.py file here](https://github.com/Sophist-UK
 Full details in the [MusicBrainz forums](http://forums.musicbrainz.org/viewtopic.php?id=4903).
 
 ##Standardise Performers
-This plugin Splits multi-instrument performer tags into single instruments and combines names so that e.g. (from 10cc by 10cc track 1):
+This plugin splits multi-instrument performer tags into single instruments and combines names so that e.g. (from 10cc by 10cc track 1):
 ```
 Performer [acoustic guitar, bass, dobro, electric guitar and tambourine]: Graham Gouldman
 Performer [acoustic guitar, electric guitar, grand piano and synthesizer]: Lol Creme
