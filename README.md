@@ -54,3 +54,27 @@ This plugin sets some tags to maximise the compatibility of mp3 files tagged by 
 Download the [musicbee_compatibility.py file here](https://github.com/Sophist-UK/Picard-Plugins/raw/master/musicbee_compatibility.py).
 
 Full details in the [MusicBrainz forums](http://forums.musicbrainz.org/viewtopic.php?id=4903).
+
+##Standardise Performers
+This plugin standardises the Performer tags so that e.g. (from 10cc by 10cc track 1):
+```
+Performer [acoustic guitar, bass, dobro, electric guitar and tambourine]: Graham Gouldman
+Performer [acoustic guitar, electric guitar, grand piano and synthesizer]: Lol Creme
+Performer [electric guitar, moog and slide guitar]: Eric Stewart
+```
+becomes:
+```
+Performer [acoustic guitar]: Graham Gouldman; Lol Creme
+Performer [bass]: Graham Gouldman
+Performer [dobro]: Graham Gouldman
+Performer [electric guitar]: Eric Stewart; Graham Gouldman; Lol Creme
+Performer [grand piano]: Lol Creme
+Performer [moog]: Eric Stewart
+Performer [slide guitar]: Eric Stewart
+Performer [synthesizer]: Lol Creme
+Performer [tambourine]: Graham Gouldman
+```
+
+Download the [standardise_performers.py file here](https://github.com/Sophist-UK/Picard-Plugins/raw/master/standardise_performers.py).
+
+Full details in the [MusicBrainz forums](http://forums.musicbrainz.org/viewtopic.php?id=4941).
