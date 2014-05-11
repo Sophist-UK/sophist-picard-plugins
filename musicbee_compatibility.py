@@ -32,7 +32,7 @@ and a couple of Virtual Columns with the following structure (because I ran out 
   Catalognumber = $Replace($First($Split(&lsaquo;Misc&rsaquo;,Catalognumber:,2)),",",;)
 </pre>
 '''
-PLUGIN_VERSION = "0.6"
+PLUGIN_VERSION = "0.7"
 PLUGIN_API_VERSIONS = ["0.15.0", "0.15.1", "0.16.0", "1.0.0", "1.1.0", "1.2.0", "1.3.0"]
 
 import re
@@ -49,7 +49,6 @@ class MusicBeeCompatibility:
         self.re_featured_split = MusicBeeCompatibility.re_featured_split
         self.populate_performers(metadata)
         self.populate_artist(metadata)
-        self.populate_writer(metadata)
         self.populate_tipl(metadata)
         self.populate_misc(metadata)
 
@@ -58,7 +57,7 @@ class MusicBeeCompatibility:
         for name in [name for name in metadata if name.startswith('performer:')]:
             self.txxx_add(metadata, 'TMCL', name[10:].title(), name, '; ')
             performers += dict.get(metadata, name)
-        metadata["PERFORMER"] = "\x00".join(set(performers))
+        metadata["PERFORMER"] = " \x00".join(set(performers))
 
     def populate_artist(self, metadata):
         if 'artists' in metadata:
@@ -81,25 +80,13 @@ class MusicBeeCompatibility:
         artists = [x for x in artists if x not in guests]
 
         metadata["DISPLAY ARTIST"] = metadata["artist"]
-        metadata["artist"] = "\x00".join(artists)
-        metadata["GUEST ARTIST"] = "\x00".join(guests)
-
-    def populate_writer(self, metadata):
-        if not "writer" in metadata:
-            return
-        self.metadata_merge(metadata, 'composer', 'writer')
-        self.metadata_merge(metadata, 'lyricist', 'writer')
-        del metadata["writer"]
-
-    def metadata_merge(self, metadata, old, new):
-        oldvals = dict.get(metadata, old, [])
-        newvals = dict.get(metadata, new, [])
-        metadata[old] = list(set(oldvals + newvals))
+        metadata["artist"] = " \x00".join(artists)
+        metadata["GUEST ARTIST"] = " \x00".join(guests)
 
     def populate_tipl(self, metadata):
         for name in ['Arranger', 'Engineer', 'Producer', 'Mixer', 'DJMixer']:
           if name.lower() in metadata:
-            metadata[name] = "\x00".join(dict.get(metadata, name.lower()))
+            metadata[name] = " \x00".join(dict.get(metadata, name.lower()))
 
         for name in ['Arranger', 'Engineer', 'Producer', 'Mixer', 'DJMixer', 'Remixer', 'Conductor']:
              self.txxx_add(metadata, 'IPLS', name, name, '; ')
@@ -121,4 +108,18 @@ class MusicBeeCompatibility:
         else:
             metadata[tagname] = label + value
 
-register_track_metadata_processor(MusicBeeCompatibility().musicbee_compatibility)
+try:
+    from picard.plugin import PluginPriority
+
+    register_track_metadata_processor(
+        MusicBeeCompatibility().musicbee_compatibility,
+        priority=PluginPriority.LOW
+        )
+
+except ImportError:
+    log.warning(
+        "Running %r plugin on this Picard version may not work as you expect. "
+        "This plugin should be run after other plugins and if it runs before "
+        "some changes to metadata may be incorrect.", PLUGIN_NAME
+    )
+    register_track_metadata_processor(MusicBeeCompatibility().musicbee_compatibility)
