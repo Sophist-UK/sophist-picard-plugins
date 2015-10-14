@@ -53,6 +53,11 @@ class AcousticBrainz_Key:
                         key += "m"
                 track_metadata["key"] = key
                 log.debug("%s: Track '%s' is in key %s", PLUGIN_NAME, track_metadata["title"], key)
+        if "rhythm" in data:
+            if "bpm" in data["rhythm"]:
+                bpm = int(data["rhythm"]["bpm"] + 0.5)
+                track_metadata["bpm"] = bpm
+                log.debug("%s: Track '%s' has %s bpm", PLUGIN_NAME, track_metadata["title"], bpm)
 
     def album_add_request(self, album):
         album._requests += 1
