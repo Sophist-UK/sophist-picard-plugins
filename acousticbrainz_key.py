@@ -8,7 +8,7 @@ PLUGIN_DESCRIPTION = u'''Add's the track's Key if:
 <li>if the key is in the AcousticBrainz database.</li>
 </ol>'''
 PLUGIN_VERSION = '0.1'
-PLUGIN_API_VERSIONS = ["0.15.0", "0.15.1", "0.16.0", "1.0.0", "1.1.0", "1.2.0", "1.3.0"]
+PLUGIN_API_VERSIONS = ["1.4.0"] # Requires support for TKEY which is in 1.4
 
 import json
 from picard import config, log
