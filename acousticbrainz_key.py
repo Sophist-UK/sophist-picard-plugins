@@ -38,10 +38,10 @@ class AcousticBrainz_Key:
         return
 
     def process_key(self, album, track_metadata, response, reply, error):
-        self.album_remove_request(album)
         if error:
             log.error("%s: Network error retrieving acousticBrainz data for recordingId %s",
                 PLUGIN_NAME, track_metadata['musicbrainz_recordingid'])
+            self.album_remove_request(album)
             return
         data = json.loads(response)
         if "tonal" in data:
@@ -58,6 +58,7 @@ class AcousticBrainz_Key:
                 bpm = int(data["rhythm"]["bpm"] + 0.5)
                 track_metadata["bpm"] = bpm
                 log.debug("%s: Track '%s' has %s bpm", PLUGIN_NAME, track_metadata["title"], bpm)
+        self.album_remove_request(album)
 
     def album_add_request(self, album):
         album._requests += 1
